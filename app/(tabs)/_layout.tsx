@@ -1,43 +1,130 @@
-import { icons } from '@/constants/icons';
 import { iconss } from "@/constants/iconss";
 import { Ionicons } from "@expo/vector-icons";
 import { Tabs } from 'expo-router';
-import React from 'react';
-import { Image, ImageBackground, StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { ImageBackground, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
-<Ionicons
-  name={icons.home}
-  size={24}
+type IoniconName = keyof typeof Ionicons.glyphMap;
+
+function TopBar() {
+    const [selectedCity, setSelectedCity] = useState<string>("Austin");
+    const CITIES = ["Austin","Dallas","Houston","San Antonio","Miami","LA","NYC","Chicago"];
+    const activeColor = "#FAFAFA";
+    const inactiveColor = "#c6d2f7";
   
-/>
-
-const TabIcon = ({ icon, title, focused }: any) => {
-    if(focused) {
-        return (
-            <ImageBackground
-            //source={images.highlight}
-            className='flex flex-row w-full flex-1 min-w-[112px] min-h-16 mt-4 justify-center items-center rounded-full overflow-hidden'
-        >
-            <Image source={icon} className="size-5" 
-            style={{ width: 24, height: 24, tintColor: 'red'}}/>
-            <Text className="text-secondary text-base font-semibold ml-2">{title}</Text>
-        </ImageBackground>
-        )
-    }
-
     return (
-        <View className="size-full justify-center items-center mt-4 rounded-full">
-            <Image source = {icon}
-            style={{ width: 24, height: 24, tintColor: focused ? '#0632ba' : '#c6d2f7'}}
-            className="size-5" />
+      <View
+        style={{
+          backgroundColor: "#000000",
+          paddingHorizontal: 12,
+          paddingVertical: 8,
+        }}
+      >
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+          }}
+        >
+          {/* profile */}
+          <Ionicons name="person-circle" size={24} color={inactiveColor} />
+          <View style={{ width: 12 }} />
+  
+          {/* search */}
+          <Ionicons name="search" size={22} color={inactiveColor} />
+          <View style={{ width: 12 }} />
+  
+          {/* cities in the middle, scrollable */}
+          <View style={{ flex: 1 }}>
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={{
+                flexDirection: "row",
+                alignItems: "center",
+              }}
+            >
+              {CITIES.map((city) => {
+                const isActive = city === selectedCity;
+                return (
+                  <Pressable
+                    key={city}
+                    onPress={() => setSelectedCity(city)}
+                    style={{
+                      paddingHorizontal: 10,
+                      paddingVertical: 6,
+                      borderRadius: 999,
+                      marginRight: 8,
+                      backgroundColor: isActive ? "#FAFAFA" : "#1F1F1F",
+                      borderWidth: 1,
+                      borderColor: isActive ? "#FAFAFA" : "#333333",
+                    }}
+                  >
+                    <Text
+                      style={{
+                        color: isActive ? "#000000" : inactiveColor,
+                        fontSize: 13,
+                        fontWeight: isActive ? "600" : "500",
+                      }}
+                    >
+                      {city}
+                    </Text>
+                  </Pressable>
+                );
+              })}
+            </ScrollView>
+          </View>
+  
+          {/* settings */}
+          <Ionicons name="settings-outline" size={22} color={inactiveColor} />
         </View>
-    )
-}
+      </View>
+    );
+  }
+  
+  
+const TabIcon = ({
+    name,
+    title = "",
+    focused,
+  }: {
+    name: IoniconName;
+    title?: string;
+    focused: boolean;
+  }) => {
+    const activeColor = "#FAFAFA";
+    const inactiveColor = "#c6d2f7";
+  
+    if (focused) {
+      return (
+        <ImageBackground
+          // source={images.highlight} // keep commented if you don’t have it
+          // NOTE: className works only if you’re using NativeWind; otherwise use style
+          className="flex flex-row w-full flex-1 min-w-[112px] min-h-16 mt-4 justify-center items-center rounded-full overflow-hidden"
+        >
+          <Ionicons name={name} size={24} color={activeColor} />
+          {title ? (
+            <Text className="text-secondary text-base font-semibold ml-2">
+              {title}
+            </Text>
+          ) : null}
+        </ImageBackground>
+      );
+    }
+  
+    return (
+      <View className="size-full justify-center items-center mt-4 rounded-full">
+        <Ionicons name={name} size={24} color={inactiveColor} />
+      </View>
+    );
+  };
 
 const _layout = () => {
   return (
     <Tabs
         screenOptions={{
+            header: () => <TopBar />,
+            headerShown: true,
             tabBarShowLabel: false,
             tabBarItemStyle: {
                 width: '100%',
@@ -59,9 +146,8 @@ const _layout = () => {
             name="index"
             options={{
                 title: "",
-                headerShown: false,
                 tabBarIcon: ({ focused }) => (
-                    <TabIcon focused={focused} icon={iconss.home} title="" />
+                    <TabIcon focused={focused} name={iconss.home as IoniconName} />
                 )
             }}
         />
@@ -69,13 +155,8 @@ const _layout = () => {
             name="calander"
             options={{
                 title: "",
-                headerShown: false,
                 tabBarIcon: ({ focused}) => (
-                    <TabIcon 
-                        focused={focused}
-                        icon={icons.calander}
-                        title=""
-                    />
+                    <TabIcon focused={focused} name={iconss.calendar as IoniconName} />
                 )
             }}
         />
@@ -83,13 +164,8 @@ const _layout = () => {
             name="friends"
             options={{
                 title: "",
-                headerShown: false,
                 tabBarIcon: ({ focused}) => (
-                    <TabIcon 
-                        focused={focused}
-                        icon={icons.friend}
-                        title=""
-                    />
+                    <TabIcon focused={focused} name={iconss.people as IoniconName} />
                 )
             }}
         />
@@ -97,13 +173,8 @@ const _layout = () => {
             name="maps"
             options={{
                 title: "",
-                headerShown: false,
                 tabBarIcon: ({ focused}) => (
-                    <TabIcon 
-                        focused={focused}
-                        icon={icons.maps}
-                        title=""
-                    />
+                    <TabIcon focused={focused} name={iconss.location as IoniconName} />
                 )
             }}
         />

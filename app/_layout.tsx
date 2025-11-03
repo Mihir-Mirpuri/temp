@@ -12,13 +12,11 @@ export default function RootLayout() {
         <StatusBar barStyle="light-content" />
       </SafeAreaView>
 
-      {/* Visible bar below the safe area */}
-      <View style={{ height: 36, backgroundColor: "#000" }} />
-
       {/* Main app */}
       <View style={{ flex: 1, backgroundColor: "#0F0D23" }}>
         <Stack>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="topBar" options={{ headerShown: false }} />
         </Stack>
       </View>
     </View>

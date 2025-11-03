@@ -7,6 +7,9 @@ export const iconss = {
     settings: "settings-outline",
     search: "search",               // or "search-outline"
     profile: "person-circle",       // or "person-circle-outline"
+    people: "people",
+    location: "location-sharp",
+    
     // Add any other icons you’ll use across the app:
     // e.g., notifications: "notifications-outline",
     // messages: "chatbubble-outline",
