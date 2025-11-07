@@ -19,7 +19,7 @@
       "package": "com.vikvij.OnTheGo",
       "config": {
         "googleMaps": {
-          "apiKey": "AIzaSyBj02MBxUcO27rHbIiaheH70V_OVd_Ntb8"
+          "apiKey": "AIzaSyDxzjX_idVJ62kMzv5q5SsAkLzy4IbKr4k"
         }
       }
     },
@@ -43,7 +43,7 @@
       [
         "react-native-maps-expo-plugin",
         {
-          "googleMapsApiKey": "AIzaSyBj02MBxUcO27rHbIiaheH70V_OVd_Ntb8"
+          "googleMapsApiKey": "AIzaSyDxzjX_idVJ62kMzv5q5SsAkLzy4IbKr4k"
         }
       ]
     ],

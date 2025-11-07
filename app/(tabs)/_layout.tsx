@@ -2,14 +2,13 @@ import { iconss } from "@/constants/iconss";
 import { Ionicons } from "@expo/vector-icons";
 import { Tabs } from 'expo-router';
 import React, { useState } from 'react';
-import { ImageBackground, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ImageBackground, Pressable, ScrollView, Text, View } from 'react-native';
 
 type IoniconName = keyof typeof Ionicons.glyphMap;
 
 function TopBar() {
     const [selectedCity, setSelectedCity] = useState<string>("Austin");
     const CITIES = ["Austin","Dallas","Houston","San Antonio","Miami","LA","NYC","Chicago"];
-    const activeColor = "#FAFAFA";
     const inactiveColor = "#c6d2f7";
   
     return (
@@ -183,5 +182,3 @@ const _layout = () => {
 }
 
 export default _layout
-
-const styles = StyleSheet.create({})
